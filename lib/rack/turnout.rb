@@ -16,7 +16,7 @@ class Rack::Turnout
     request = Turnout::Request.new(env)
     settings = Turnout::MaintenanceFile.find
 
-    if settings && !request.allowed?(settings)
+    if settings && !request.allowed?(settings) && ENV['MAINTENANCE_MODE'] == 'true'
       page_class = Turnout::MaintenancePage.best_for(env)
       page = page_class.new(settings.reason, env: env)
 
